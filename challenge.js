@@ -28,16 +28,33 @@ let people = [{
     pic: "https://nationaltoday.com/wp-content/uploads/2022/05/84-Colin-Farrell.jpg"
 }];
 
-for (let val of people) {
+// for (let val of people) {
+//     document.getElementById("result").innerHTML += `
+//     <div>
+//     <div class="card" style="width: 20rem;">
+//     <img src="${val.pic}" class="card-img-top" alt="${val.fname}">
+//     <div class="card-body">
+//       <h5 class="card-title">${val.fname}</h5>
+//       <p class="likes">${val.like}</p>
+//       <a class="btn btn-success likeBtn">Like</a>
+//       <a class="btn btn-danger showMore">Show more</a>
+//       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="">Open modal for @mdo</button>
+//     </div>
+//     </div>
+//     </div>`;
+// }
+
+for (let val in people) {
     document.getElementById("result").innerHTML += `
     <div>
     <div class="card" style="width: 20rem;">
-    <img src="${val.pic}" class="card-img-top" alt="${val.fname}">
+    <img src="${people[val].pic}" class="card-img-top" alt="${people[val].fname}">
     <div class="card-body">
-      <h5 class="card-title">${val.fname}</h5>
-      <p class="likes">${val.like}</p>
-      <p class="btn btn-success likeBtn">Like</a>
-      <p class="btn btn-danger showMore">Show more</a>
+      <h5 class="card-title">${people[val].fname}</h5>
+      <p class="likes">${people[val].like}</p>
+      <a class="btn btn-success likeBtn">Like</a>
+      <a class="btn btn-danger showMore">Show more</a>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="${val}">Open modal for @mdo</button>
     </div>
     </div>
     </div>`;
@@ -66,3 +83,20 @@ for (let i = 0; i < moreInfoBtns.length; i++) {
       </div>`
     })
 }
+
+const exampleModal = document.getElementById('exampleModal')
+exampleModal.addEventListener('show.bs.modal', event => {
+    // Button that triggered the modal
+    const button = event.relatedTarget
+        // Extract info from data-bs-* attributes
+    const index = button.getAttribute('data-bs-whatever')
+        // If necessary, you could initiate an AJAX request here
+        // and then do the updating in a callback.
+        //
+        // Update the modal's content.
+    const modalTitle = exampleModal.querySelector('.modal-title')
+    const modalBody = exampleModal.querySelector('.modal-body')
+
+    modalTitle.textContent = `${people[index].fname}`
+    modalBody.innerHTML = `<img src="${people[index].pic}" class="img-thumbnail" alt="${people[index].fname}">`
+})
